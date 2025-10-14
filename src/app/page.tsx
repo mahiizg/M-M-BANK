@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo"
+import { PinInput } from "@/components/ui/pin-input"
 
 export default function UserLogin() {
   return (
@@ -46,14 +47,7 @@ export default function UserLogin() {
                   Forgot your PIN?
                 </Link>
               </div>
-              <Input
-                id="pin"
-                type="password"
-                maxLength={4}
-                placeholder="****"
-                required
-                className="tracking-[1rem] text-center"
-              />
+              <PinInput />
             </div>
             <Button className="w-full" asChild>
               <Link href="/dashboard">Login</Link>

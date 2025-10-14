@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo"
+import { PinInput } from "@/components/ui/pin-input"
 
 export default function AdminLogin() {
   return (
@@ -38,14 +39,7 @@ export default function AdminLogin() {
             </div>
              <div className="grid gap-2">
               <Label htmlFor="pin">4-Digit PIN</Label>
-              <Input
-                id="pin"
-                type="password"
-                maxLength={4}
-                placeholder="****"
-                required
-                className="tracking-[1rem] text-center"
-              />
+              <PinInput />
             </div>
             <Button className="w-full" asChild>
               <Link href="/admin/dashboard">Sign In</Link>
