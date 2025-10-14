@@ -45,7 +45,7 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
   };
 
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex w-full justify-between gap-2 md:gap-4">
       {pin.map((digit, index) => (
         <Input
           key={index}
@@ -55,7 +55,7 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
           value={digit}
           onChange={e => handleChange(e, index)}
           onKeyDown={e => handleKeyDown(e, index)}
-          className="h-14 w-12 text-center text-2xl font-bold"
+          className="h-14 w-full text-center text-2xl font-bold"
           aria-label={`PIN digit ${index + 1}`}
         />
       ))}
