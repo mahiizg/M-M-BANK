@@ -79,8 +79,8 @@ export default function HistoryPage() {
                   <TableHead>Description</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Amount (INR)</TableHead>
-                  <TableHead className="text-right">Balance (INR)</TableHead>
+                  <TableHead className="text-right">Amount (₹)</TableHead>
+                  <TableHead className="text-right">Balance (₹)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

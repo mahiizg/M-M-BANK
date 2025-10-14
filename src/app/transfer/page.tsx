@@ -84,7 +84,7 @@ export default function TransferPage() {
                 </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="amount">Amount (INR)</Label>
+                <Label htmlFor="amount">Amount (₹)</Label>
                 <div className="relative">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">₹</span>
                   <Input id="amount" type="number" placeholder="0.00" className="pl-7"/>
