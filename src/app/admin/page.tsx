@@ -36,10 +36,6 @@ export default function AdminLogin() {
                 defaultValue="admin.kumar@mmbank.com"
               />
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" required defaultValue="adminpass" />
-            </div>
              <div className="grid gap-2">
               <Label htmlFor="pin">4-Digit PIN</Label>
               <Input
