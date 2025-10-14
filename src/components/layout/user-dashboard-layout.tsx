@@ -29,11 +29,11 @@ export function UserDashboardLayout({ children }: { children: React.ReactNode })
       <main className="flex-1 overflow-y-auto p-4">{children}</main>
       <nav className="sticky bottom-0 border-t bg-card">
         <div className="mx-auto grid h-16 max-w-md grid-cols-5 items-center px-2 text-sm font-medium">
-          {navItems.map((item, index) => {
+          {navItems.map((item) => {
             const isScanButton = item.label === "Scan To Pay";
             if (isScanButton) {
               return (
-                 <div key={item.href} className="flex justify-center">
+                 <div key={item.label} className="flex justify-center">
                     <Link
                     href={item.href}
                     className={cn(
@@ -48,7 +48,7 @@ export function UserDashboardLayout({ children }: { children: React.ReactNode })
             }
             return (
                 <Link
-                key={item.href}
+                key={item.label}
                 href={item.href}
                 className={cn(
                     "flex flex-col items-center justify-center gap-1 rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
