@@ -71,7 +71,7 @@ export default function DashboardPage() {
                   <TableRow>
                     <TableHead>Description</TableHead>
                     <TableHead>Date</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead className="text-right">Amount (INR)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

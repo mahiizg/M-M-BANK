@@ -94,7 +94,7 @@ export default function AdminReportsPage() {
                   <TableHead>Date</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>Type</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-right">Amount (INR)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

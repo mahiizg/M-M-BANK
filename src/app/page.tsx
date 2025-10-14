@@ -31,7 +31,7 @@ export default function UserLogin() {
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="priya@example.com"
                 required
                 defaultValue="priya.sharma@mmbank.com"
               />
