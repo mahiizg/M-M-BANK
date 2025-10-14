@@ -58,12 +58,12 @@ export function DashboardLayout({ children, navItems, userType }: DashboardLayou
     );
   }
 
-  // GPay-style layout for regular users
+  // Mobile-first layout for regular users, not using the original GPay-style nav
   return (
     <div className="flex h-screen w-full flex-col bg-background">
       <main className="flex-1 overflow-y-auto p-4">{children}</main>
       <nav className="sticky bottom-0 border-t bg-card">
-        <div className="mx-auto grid h-16 max-w-md grid-cols-4 items-center px-4 text-sm font-medium">
+        <div className="mx-auto grid h-16 max-w-md grid-cols-5 items-center px-2 text-sm font-medium">
           {navItems.map((item) => (
             <Link
               key={item.href}

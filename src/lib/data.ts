@@ -1,3 +1,5 @@
+import { Share2 } from "lucide-react";
+
 export type Account = {
   id: string;
   type: 'Checking' | 'Savings';
@@ -40,7 +42,7 @@ export type Person = {
 export type Bill = {
   id: string;
   name: string;
-  iconUrl: string;
+  iconUrl: string | React.ElementType;
 }
 
 
@@ -112,8 +114,8 @@ export const people: Person[] = [
 ]
 
 export const bills: Bill[] = [
-  { id: 'bill_1', name: 'Mobile Recharge', iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mobile-recharge-2-870344.png' },
-  { id: 'bill_2', name: 'DTH Recharge', iconUrl: 'https://cdn4.iconfinder.com/data/icons/money-and-finance-25/512/dth_recharge-512.png' },
+  { id: 'bill_1', name: 'Mobile Postpaid', iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mobile-recharge-2-870344.png' },
+  { id: 'bill_2', name: 'DTH', iconUrl: 'https://cdn4.iconfinder.com/data/icons/money-and-finance-25/512/dth_recharge-512.png' },
   { id: 'bill_3', name: 'Electricity', iconUrl: 'https://cdn-icons-png.flaticon.com/512/2850/2850785.png' },
   { id: 'bill_4', name: 'Credit Card', iconUrl: 'https://cdn-icons-png.flaticon.com/512/6942/6942468.png' },
 ]
