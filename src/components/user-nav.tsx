@@ -54,9 +54,11 @@ export function UserNav() {
               Billing
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            Settings
+          <DropdownMenuItem asChild>
+            <Link href="/profile">
+              <Settings />
+              Settings
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

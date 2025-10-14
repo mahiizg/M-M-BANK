@@ -1,8 +1,15 @@
 export type Account = {
   id: string;
   type: 'Checking' | 'Savings';
-  number: string;
+  number: string; // The masked number like '**** 1234'
+  accountNumber: string; // The full account number
   balance: number;
+  ifsc: string;
+  card: {
+    cardNumber: string;
+    validThru: string;
+    cvv: string;
+  }
 };
 
 export type Transaction = {
@@ -28,11 +35,37 @@ export const user = {
   name: 'Priya Sharma',
   email: 'priya.sharma@mmbank.com',
   avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+  upiId: 'priya.sharma@mmbank',
+  qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=priya.sharma@mmbank'
 };
 
 export const accounts: Account[] = [
-  { id: 'acc_1', type: 'Checking', number: '**** **** **** 1234', balance: 450000.75 },
-  { id: 'acc_2', type: 'Savings', number: '**** **** **** 5678', balance: 1250000.50 },
+  { 
+    id: 'acc_1', 
+    type: 'Checking', 
+    number: '**** **** **** 1234', 
+    accountNumber: '123456789012',
+    balance: 450000.75,
+    ifsc: 'MMBK0001234',
+    card: {
+      cardNumber: '4012 3456 7890 1234',
+      validThru: '12/28',
+      cvv: '123'
+    }
+  },
+  { 
+    id: 'acc_2', 
+    type: 'Savings', 
+    number: '**** **** **** 5678', 
+    accountNumber: '987654321098',
+    balance: 1250000.50,
+    ifsc: 'MMBK0005678',
+    card: {
+      cardNumber: '5012 3456 7890 5678',
+      validThru: '08/29',
+      cvv: '456'
+    }
+  },
 ];
 
 export const transactions: Transaction[] = [

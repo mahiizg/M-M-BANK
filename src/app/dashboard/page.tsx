@@ -2,10 +2,9 @@ import {
   ArrowRightLeft,
   CircleDollarSign,
   History,
-  PiggyBank,
-  Wallet,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -23,7 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { accounts, transactions } from "@/lib/data";
+import { accounts, transactions, user } from "@/lib/data";
+import { DebitCard } from "@/components/debit-card";
 
 export default function DashboardPage() {
   const formatCurrency = (amount: number) => {
@@ -35,35 +35,50 @@ export default function DashboardPage() {
 
   return (
     <UserDashboardLayout>
-      <div className="grid gap-6">
-        <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-8">
+        <div className="grid gap-8 md:grid-cols-2">
           {accounts.map((account) => (
-            <Card key={account.id} className="shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-base font-medium font-headline">
-                  {account.type} Account
-                </CardTitle>
-                {account.type === 'Checking' ? <Wallet className="h-5 w-5 text-muted-foreground" /> : <PiggyBank className="h-5 w-5 text-muted-foreground" />}
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold font-headline">
-                  {formatCurrency(account.balance)}
-                </div>
-                <p className="text-sm text-muted-foreground pt-1">
-                  {account.number}
-                </p>
-              </CardContent>
-            </Card>
+            <DebitCard key={account.id} account={account} />
           ))}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Card className="shadow-md lg:col-span-2">
+        <div className="grid gap-8 lg:grid-cols-3">
+          <Card className="shadow-md">
             <CardHeader>
-              <CardTitle className="font-headline">Recent Transactions</CardTitle>
+              <CardTitle className="font-headline">UPI &amp; QR Code</CardTitle>
               <CardDescription>
-                A quick look at your recent account activity.
+                Receive payments instantly using your UPI details.
               </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-4 text-center">
+               <div className="rounded-lg border bg-background p-4">
+                 <Image
+                    src={user.qrCodeUrl}
+                    alt="UPI QR Code"
+                    width={180}
+                    height={180}
+                    className="rounded-md"
+                  />
+               </div>
+               <div>
+                  <p className="text-sm text-muted-foreground">Your UPI ID</p>
+                  <p className="font-mono font-medium">{user.upiId}</p>
+               </div>
+                <Button variant="outline" className="w-full">Copy UPI ID</Button>
+            </CardContent>
+          </Card>
+
+           <Card className="shadow-md lg:col-span-2">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="font-headline">Account Statement</CardTitle>
+                <CardDescription>
+                  A quick look at your recent account activity.
+                </CardDescription>
+              </div>
+               <Button asChild variant="outline" size="sm">
+                <Link href="/history">View All</Link>
+              </Button>
             </CardHeader>
             <CardContent>
               <Table>
@@ -91,15 +106,16 @@ export default function DashboardPage() {
               </Table>
             </CardContent>
           </Card>
-          
-          <Card className="shadow-md">
+        </div>
+
+        <Card className="shadow-md">
             <CardHeader>
               <CardTitle className="font-headline">Quick Actions</CardTitle>
               <CardDescription>
                 Your most-used actions, just a click away.
               </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-4">
+            <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
                 <Link href="/transfer">
                   <ArrowRightLeft className="h-5 w-5" />
@@ -109,7 +125,7 @@ export default function DashboardPage() {
               <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
                 <Link href="/history">
                   <History className="h-5 w-5" />
-                  View All History
+                  View Statement
                 </Link>
               </Button>
               <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
@@ -118,9 +134,14 @@ export default function DashboardPage() {
                   Pay Bills
                 </Link>
               </Button>
+               <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
+                <Link href="/profile">
+                  <History className="h-5 w-5" />
+                  Settings
+                </Link>
+              </Button>
             </CardContent>
           </Card>
-        </div>
       </div>
     </UserDashboardLayout>
   );

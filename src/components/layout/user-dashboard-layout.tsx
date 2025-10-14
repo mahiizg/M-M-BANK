@@ -7,6 +7,7 @@ import {
   ArrowRightLeft as TransferIcon,
   History,
   User,
+  LifeBuoy,
 } from "lucide-react";
 
 const navItems = [
@@ -14,6 +15,7 @@ const navItems = [
   { href: "/transfer", icon: TransferIcon, label: "Transfers" },
   { href: "/history", icon: History, label: "History" },
   { href: "/profile", icon: User, label: "Profile" },
+  { href: "#", icon: LifeBuoy, label: "Help & Support" },
 ];
 
 export function UserDashboardLayout({ children }: { children: React.ReactNode }) {
