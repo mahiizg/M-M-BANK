@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo"
 
-export default function UserLogin() {
+export default function AdminLogin() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="mx-auto w-full max-w-sm shadow-lg">
@@ -19,9 +19,9 @@ export default function UserLogin() {
           <div className="mb-4 flex justify-center">
             <Logo />
           </div>
-          <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl font-headline">Admin Portal</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your credentials to access the admin dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -31,31 +31,23 @@ export default function UserLogin() {
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="admin@mmbank.com"
                 required
-                defaultValue="customer@mmbank.com"
+                defaultValue="admin@mmbank.com"
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
-              <Input id="password" type="password" required defaultValue="password123" />
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" required defaultValue="adminpass" />
             </div>
             <Button type="submit" className="w-full" asChild>
-              <Link href="/dashboard">Login</Link>
+              <Link href="/admin/dashboard">Sign In</Link>
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Access{" "}
-            <Link href="/admin" className="underline">
-              Admin Portal
+            Not an admin?{" "}
+            <Link href="/" className="underline">
+              User Login
             </Link>
           </div>
         </CardContent>
