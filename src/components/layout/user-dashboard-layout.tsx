@@ -7,7 +7,8 @@ import {
   Scan,
   Gift,
   User,
-  History
+  History,
+  ListTodo
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -15,7 +16,7 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Home" },
-  { href: "#", icon: Gift, label: "Offers" },
+  { href: "/requests", icon: ListTodo, label: "Requests" },
   { href: "#", icon: Scan, label: "Scan To Pay" },
   { href: "/history", icon: History, label: "History" },
   { href: "/profile", icon: User, label: "Profile" },

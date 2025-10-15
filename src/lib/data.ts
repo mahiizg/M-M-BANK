@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, Share2, Ticket, Users } from "lucide-react";
+import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, ListTodo, Share2, Ticket, Users } from "lucide-react";
 
 export type Account = {
   id: string;
@@ -49,6 +49,13 @@ export type Bank = {
   id: string;
   name: string;
 }
+
+export type PendingRequest = {
+  id: string;
+  person: Person;
+  amount: number;
+  note: string;
+};
 
 
 export const user = {
@@ -149,3 +156,24 @@ export const banks: Bank[] = [
     { id: 'bank_9', name: 'Union Bank of India' },
     { id: 'bank_10', name: 'Canara Bank' },
 ]
+
+export const pendingRequests: PendingRequest[] = [
+  { 
+    id: 'req_1', 
+    person: { id: 'ppl_2', name: 'Diya Patel', avatar: 'https://i.pravatar.cc/150?u=diya' },
+    amount: 1500.00,
+    note: 'For the concert tickets',
+  },
+  { 
+    id: 'req_2', 
+    person: { id: 'ppl_3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/150?u=rohan' },
+    amount: 850.50,
+    note: 'Dinner last night',
+  },
+    { 
+    id: 'req_3', 
+    person: { id: 'ppl_5', name: 'Kabir Kumar', avatar: 'https://i.pravatar.cc/150?u=kabir' },
+    amount: 2500.00,
+    note: 'Trip contribution',
+  },
+];

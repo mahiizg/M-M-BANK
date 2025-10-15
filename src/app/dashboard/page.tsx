@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from 'react';
@@ -362,7 +363,7 @@ export default function DashboardPage() {
                 )}
               </DialogContent>
             </Dialog>
-            <QuickAction icon={History} label="Pending Requests" />
+            <QuickAction icon={History} label="Pending Requests" href="/requests"/>
           </section>
 
           {/* Services Grid */}
