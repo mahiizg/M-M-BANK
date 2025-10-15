@@ -28,6 +28,15 @@ export default function AdminLogin() {
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                    id="name"
+                    type="text"
+                    placeholder="Admin User"
+                    required
+                />
+            </div>
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"

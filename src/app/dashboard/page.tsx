@@ -56,11 +56,14 @@ const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: R
 export default function DashboardPage() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
+  const nameParam = searchParams.get('name');
   
-  let name = user.name.split(' ')[0];
-  if (email) {
+  let displayName = user.name;
+  if (nameParam) {
+    displayName = nameParam.split(' ')[0];
+  } else if (email) {
     const emailName = email.split('@')[0];
-    name = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+    displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
   }
 
 
@@ -78,10 +81,10 @@ export default function DashboardPage() {
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 border-2 border-background">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{getInitials(name)}</AvatarFallback>
+              <AvatarImage src={user.avatar} alt={displayName} />
+              <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
             </Avatar>
-            <h1 className="text-lg font-semibold">Hi {name}</h1>
+            <h1 className="text-lg font-semibold">Hi {displayName}</h1>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon">

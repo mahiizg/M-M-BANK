@@ -16,6 +16,7 @@ import Logo from "@/components/logo"
 import { PinInput } from "@/components/ui/pin-input"
 
 export default function UserLogin() {
+  const [name, setName] = useState("Priya Sharma");
   const [email, setEmail] = useState("priya@example.com");
 
   return (
@@ -32,6 +33,17 @@ export default function UserLogin() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
+             <div className="grid gap-2">
+              <Label htmlFor="name">Full Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Priya Sharma"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -56,7 +68,7 @@ export default function UserLogin() {
               <PinInput />
             </div>
             <Button className="w-full" asChild>
-              <Link href={`/dashboard?email=${email}`}>Login</Link>
+              <Link href={`/dashboard?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`}>Login</Link>
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
