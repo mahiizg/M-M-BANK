@@ -19,7 +19,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { user, services, accounts } from "@/lib/data";
+import { user, services, accounts, people } from "@/lib/data";
 import {
   Dialog,
   DialogContent,
@@ -261,7 +261,46 @@ export default function DashboardPage() {
           {/* Quick Actions */}
           <section className="grid grid-cols-3 gap-4 text-center">
             <QuickAction icon={Send} label="Send Money" href="/transfer" />
-            <QuickAction icon={Send} label="Collect Money" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <div>
+                  <QuickAction icon={Send} label="Collect Money" />
+                </div>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Request Money</DialogTitle>
+                  <DialogDescription>
+                    Search for a contact to request money from.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <Input placeholder="Search by name or UPI ID" />
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-muted-foreground">
+                      Recent Contacts
+                    </h3>
+                    <div className="flex flex-col gap-2">
+                      {people.map((person) => (
+                        <Link
+                          href="/transfer"
+                          key={person.id}
+                          className="flex items-center gap-3 rounded-md p-2 hover:bg-accent"
+                        >
+                          <Avatar>
+                            <AvatarImage src={person.avatar} />
+                            <AvatarFallback>
+                              {getInitials(person.name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="font-medium">{person.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
             <QuickAction icon={History} label="Pending Requests" />
           </section>
 
