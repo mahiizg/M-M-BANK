@@ -45,6 +45,11 @@ export type Bill = {
   icon: React.ElementType;
 }
 
+export type Bank = {
+  id: string;
+  name: string;
+}
+
 
 export const user = {
   name: 'Priya Sharma',
@@ -130,4 +135,17 @@ export const bills: Bill[] = [
   { id: 'bill_2', name: 'DTH', icon: Share2 },
   { id: 'bill_3', name: 'Electricity', icon: Share2 },
   { id: 'bill_4', name: 'Credit Card', icon: Share2 },
+]
+
+export const banks: Bank[] = [
+    { id: 'bank_1', name: 'HDFC Bank' },
+    { id: 'bank_2', name: 'ICICI Bank' },
+    { id: 'bank_3', name: 'Axis Bank' },
+    { id: 'bank_4', name: 'Kotak Mahindra Bank' },
+    { id: 'bank_5', name: 'IndusInd Bank' },
+    { id: 'bank_6', name: 'State Bank of India (SBI)' },
+    { id: 'bank_7', name: 'Punjab National Bank (PNB)' },
+    { id: 'bank_8', name: 'Bank of Baroda' },
+    { id: 'bank_9', name: 'Union Bank of India' },
+    { id: 'bank_10', name: 'Canara Bank' },
 ]
