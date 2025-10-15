@@ -37,10 +37,10 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
 
-const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
+const QuickAction = ({ icon, label, href }: { icon: React.ElementType, label: string, href?: string }) => {
   const Icon = icon;
-  return (
-    <div className="flex flex-col items-center gap-2 text-center">
+  const content = (
+     <div className="flex flex-col items-center gap-2 text-center">
       <Button
         variant="outline"
         className="h-16 w-16 rounded-full bg-primary/10 text-primary hover:bg-primary/20"
@@ -50,6 +50,12 @@ const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }
       <span className="text-sm font-medium text-foreground">{label}</span>
     </div>
   );
+
+  if (href) {
+    return <Link href={href}>{content}</Link>
+  }
+
+  return content;
 };
 
 const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: React.ElementType } }) => {
@@ -254,7 +260,7 @@ export default function DashboardPage() {
 
           {/* Quick Actions */}
           <section className="grid grid-cols-3 gap-4 text-center">
-            <QuickAction icon={Send} label="Send Money" />
+            <QuickAction icon={Send} label="Send Money" href="/transfer" />
             <QuickAction icon={Send} label="Collect Money" />
             <QuickAction icon={History} label="Pending Requests" />
           </section>
