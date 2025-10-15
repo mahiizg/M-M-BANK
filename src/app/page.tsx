@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,6 +16,8 @@ import Logo from "@/components/logo"
 import { PinInput } from "@/components/ui/pin-input"
 
 export default function UserLogin() {
+  const [email, setEmail] = useState("priya@example.com");
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="mx-auto w-full max-w-sm shadow-lg">
@@ -33,6 +38,8 @@ export default function UserLogin() {
                 id="email"
                 type="email"
                 placeholder="priya@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -49,7 +56,7 @@ export default function UserLogin() {
               <PinInput />
             </div>
             <Button className="w-full" asChild>
-              <Link href="/dashboard">Login</Link>
+              <Link href={`/dashboard?email=${email}`}>Login</Link>
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

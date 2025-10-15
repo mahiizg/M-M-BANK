@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from 'next/navigation';
 import {
   ArrowRight,
   Bell,
@@ -53,6 +54,16 @@ const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: R
 
 
 export default function DashboardPage() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email');
+  
+  let name = user.name.split(' ')[0];
+  if (email) {
+    const emailName = email.split('@')[0];
+    name = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+  }
+
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -68,9 +79,9 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 border-2 border-background">
               <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+              <AvatarFallback>{getInitials(name)}</AvatarFallback>
             </Avatar>
-            <h1 className="text-lg font-semibold">Hi {user.name.split(' ')[0]}</h1>
+            <h1 className="text-lg font-semibold">Hi {name}</h1>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon">
@@ -91,7 +102,7 @@ export default function DashboardPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-lg font-bold">M&M Bank</p>
-                  <p className="text-sm opacity-80">{user.email}</p>
+                  <p className="text-sm opacity-80">{email || user.email}</p>
                   <p className="text-xs opacity-60">Savings A/C: **** **** 8975</p>
                 </div>
                 <div className="flex items-center gap-2">
