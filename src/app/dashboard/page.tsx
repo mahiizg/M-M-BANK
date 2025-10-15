@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation';
@@ -25,7 +26,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { user, services } from "@/lib/data";
+import { user, services, accounts } from "@/lib/data";
 
 const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
   const Icon = icon;
@@ -57,7 +58,8 @@ export default function DashboardPage() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
   const nameParam = searchParams.get('name');
-  
+  const [showBalance, setShowBalance] = useState(false);
+
   let displayName = user.name;
   if (nameParam) {
     displayName = nameParam.split(' ')[0];
@@ -65,6 +67,16 @@ export default function DashboardPage() {
     const emailName = email.split('@')[0];
     displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
   }
+
+  const savingsAccount = accounts.find(acc => acc.type === 'Savings');
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
 
 
   const getInitials = (name: string) => {
@@ -106,7 +118,7 @@ export default function DashboardPage() {
                 <div>
                   <p className="text-lg font-bold">M&M Bank</p>
                   <p className="text-sm opacity-80">{email || user.email}</p>
-                  <p className="text-xs opacity-60">Savings A/C: **** **** 8975</p>
+                  <p className="text-xs opacity-60">Savings A/C: {savingsAccount?.number}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Copy className="h-4 w-4 cursor-pointer opacity-70 hover:opacity-100" />
@@ -114,7 +126,14 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <Button variant="secondary" className="bg-white/20 text-white hover:bg-white/30">View Balance</Button>
+                <div className="flex items-center gap-4">
+                  <Button variant="secondary" className="bg-white/20 text-white hover:bg-white/30" onClick={() => setShowBalance(!showBalance)}>
+                    {showBalance ? 'Hide Balance' : 'View Balance'}
+                  </Button>
+                  {showBalance && savingsAccount && (
+                    <span className="text-xl font-bold">{formatCurrency(savingsAccount.balance)}</span>
+                  )}
+                </div>
                 <div className="flex items-center divide-x divide-white/20 text-sm">
                    <Link href="/history" className="px-3 hover:underline">View Transactions</Link>
                    <Link href="#" className="pl-3 hover:underline">Manage UPI ID</Link>
