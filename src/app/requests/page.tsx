@@ -58,7 +58,7 @@ export default function RequestsPage() {
                   </div>
                   <div className="flex gap-2">
                     <Button asChild>
-                        <Link href="/transfer">Pay</Link>
+                        <Link href={`/transfer?amount=${request.amount}&note=${encodeURIComponent(request.note)}&upiId=${request.person.upiId}`}>Pay</Link>
                     </Button>
                     <Button variant="outline">Decline</Button>
                   </div>

@@ -37,6 +37,7 @@ export type Person = {
   id:string;
   name: string;
   avatar: string;
+  upiId: string;
 }
 
 export type Bill = {
@@ -116,13 +117,13 @@ export const customers: Customer[] = [
 ];
 
 export const people: Person[] = [
-  { id: 'ppl_1', name: 'Aarav Sharma', avatar: 'https://i.pravatar.cc/150?u=aarav' },
-  { id: 'ppl_2', name: 'Diya Patel', avatar: 'https://i.pravatar.cc/150?u=diya' },
-  { id: 'ppl_3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/150?u=rohan' },
-  { id: 'ppl_4', name: 'Isha Singh', avatar: 'https://i.pravatar.cc/150?u=isha' },
-  { id: 'ppl_5', name: 'Kabir Kumar', avatar: 'https://i.pravatar.cc/150?u=kabir' },
-  { id: 'ppl_6', name: 'Myra Reddy', avatar: 'https://i.pravatar.cc/150?u=myra' },
-  { id: 'ppl_7', name: 'Arjun Das', avatar: 'https://i.pravatar.cc/150?u=arjun' },
+  { id: 'ppl_1', name: 'Aarav Sharma', avatar: 'https://i.pravatar.cc/150?u=aarav', upiId: 'aarav.sharma@mmbank' },
+  { id: 'ppl_2', name: 'Diya Patel', avatar: 'https://i.pravatar.cc/150?u=diya', upiId: 'diya.p@okbank' },
+  { id: 'ppl_3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/150?u=rohan', upiId: 'rohan.gupta@ybl' },
+  { id: 'ppl_4', name: 'Isha Singh', avatar: 'https://i.pravatar.cc/150?u=isha', upiId: 'isha.singh@axb' },
+  { id: 'ppl_5', name: 'Kabir Kumar', avatar: 'https://i.pravatar.cc/150?u=kabir', upiId: 'kabirk@paytm' },
+  { id: 'ppl_6', name: 'Myra Reddy', avatar: 'https://i.pravatar.cc/150?u=myra', upiId: 'myra.reddy@icici' },
+  { id: 'ppl_7', name: 'Arjun Das', avatar: 'https://i.pravatar.cc/150?u=arjun', upiId: 'arjun.das@hdfc' },
 ]
 
 export const services: Bill[] = [
@@ -160,19 +161,19 @@ export const banks: Bank[] = [
 export const pendingRequests: PendingRequest[] = [
   { 
     id: 'req_1', 
-    person: { id: 'ppl_2', name: 'Diya Patel', avatar: 'https://i.pravatar.cc/150?u=diya' },
+    person: people[1],
     amount: 1500.00,
     note: 'For the concert tickets',
   },
   { 
     id: 'req_2', 
-    person: { id: 'ppl_3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/150?u=rohan' },
+    person: people[2],
     amount: 850.50,
     note: 'Dinner last night',
   },
     { 
     id: 'req_3', 
-    person: { id: 'ppl_5', name: 'Kabir Kumar', avatar: 'https://i.pravatar.cc/150?u=kabir' },
+    person: people[4],
     amount: 2500.00,
     note: 'Trip contribution',
   },

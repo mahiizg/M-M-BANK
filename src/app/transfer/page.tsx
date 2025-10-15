@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { ArrowRightLeft as TransferIcon, CheckCircle } from "lucide-react";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import {
@@ -34,18 +35,31 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export default function TransferPage() {
+function TransferForm() {
+  const searchParams = useSearchParams();
+  const [upiId, setUpiId] = useState("");
+  const [upiAmount, setUpiAmount] = useState("");
+  const [upiMemo, setUpiMemo] = useState("");
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  
+  useEffect(() => {
+    const amount = searchParams.get("amount");
+    const note = searchParams.get("note");
+    const upi = searchParams.get("upiId");
+
+    if (amount) setUpiAmount(amount);
+    if (note) setUpiMemo(note);
+    if (upi) setUpiId(upi);
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setShowSuccessDialog(true);
   };
-
+  
   return (
-    <UserDashboardLayout>
-      <div className="flex justify-center">
-        <Card className="w-full max-w-2xl shadow-lg">
+    <>
+       <Card className="w-full max-w-2xl shadow-lg">
           <CardHeader>
             <CardTitle className="font-headline text-2xl">Transfer Funds</CardTitle>
             <CardDescription>
@@ -62,18 +76,18 @@ export default function TransferPage() {
                 <form className="grid gap-6 pt-4" onSubmit={handleSubmit}>
                   <div className="grid gap-2">
                     <Label htmlFor="upi-id">Enter UPI ID</Label>
-                    <Input id="upi-id" placeholder="name@bank" />
+                    <Input id="upi-id" placeholder="name@bank" value={upiId} onChange={(e) => setUpiId(e.target.value)} />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="upi-amount">Amount (₹)</Label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">₹</span>
-                      <Input id="upi-amount" type="number" placeholder="0.00" className="pl-7"/>
+                      <Input id="upi-amount" type="number" placeholder="0.00" className="pl-7" value={upiAmount} onChange={(e) => setUpiAmount(e.target.value)} />
                     </div>
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="upi-memo">Description (Optional)</Label>
-                    <Textarea id="upi-memo" placeholder="Enter a brief description" />
+                    <Textarea id="upi-memo" placeholder="Enter a brief description" value={upiMemo} onChange={(e) => setUpiMemo(e.target.value)} />
                   </div>
                    <div className="grid gap-2">
                       <Label htmlFor="upi-pin">Enter 4-Digit PIN</Label>
@@ -134,26 +148,38 @@ export default function TransferPage() {
             </Tabs>
           </CardContent>
         </Card>
-      </div>
 
-      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div className="flex flex-col items-center text-center">
-               <CheckCircle className="h-20 w-20 text-green-500 mb-4" />
-              <AlertDialogTitle className="text-2xl font-headline">Successful</AlertDialogTitle>
-              <AlertDialogDescription>
-                Your fund transfer has been completed successfully.
-              </AlertDialogDescription>
-            </div>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="sm:justify-center">
-             <Button onClick={() => setShowSuccessDialog(false)}>
-              Done
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+            <AlertDialogContent>
+            <AlertDialogHeader>
+                <div className="flex flex-col items-center text-center">
+                <CheckCircle className="h-20 w-20 text-green-500 mb-4" />
+                <AlertDialogTitle className="text-2xl font-headline">Successful</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Your fund transfer has been completed successfully.
+                </AlertDialogDescription>
+                </div>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="sm:justify-center">
+                <Button onClick={() => setShowSuccessDialog(false)}>
+                Done
+                </Button>
+            </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    </>
+  )
+}
+
+
+export default function TransferPage() {
+  return (
+    <UserDashboardLayout>
+      <div className="flex justify-center">
+       <Suspense fallback={<div>Loading...</div>}>
+         <TransferForm />
+       </Suspense>
+      </div>
     </UserDashboardLayout>
   );
 }
