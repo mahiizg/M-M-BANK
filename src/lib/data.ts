@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, ListTodo, Share2, Ticket, Users } from "lucide-react";
+import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, Ticket, Users, Smartphone, Zap, Flame, Droplets, ListTodo } from "lucide-react";
 
 export type Account = {
   id: string;
@@ -16,13 +16,22 @@ export type Account = {
 
 export type Transaction = {
   id: string;
-  date: string;
-  description: string;
+  userId: string;
+  type: 'recharge' | 'electricity' | 'lpg';
   amount: number;
-  type: 'Deposit' | 'Withdrawal' | 'Transfer' | 'Payment';
-  status: 'Completed' | 'Pending' | 'Failed';
-  balance: number;
+  date: string;
+  status: string;
 };
+
+export type RechargePlan = {
+  id: string;
+  operator: string;
+  amount: number;
+  validity: string;
+  dataPerDay: string;
+  description: string;
+};
+
 
 export type Customer = {
   id: string;
@@ -57,14 +66,6 @@ export type PendingRequest = {
   amount: number;
   note: string;
 };
-
-export const rechargePlans = [
-    { id: 'plan_1', amount: 199, validity: '28 days', data: '1.5 GB/day' },
-    { id: 'plan_2', amount: 299, validity: '28 days', data: '2 GB/day' },
-    { id: 'plan_3', amount: 499, validity: '56 days', data: '2 GB/day' },
-    { id: 'plan_4', amount: 719, validity: '84 days', data: '2.5 GB/day' },
-];
-
 
 export const user = {
   name: 'Priya Sharma',
@@ -103,16 +104,12 @@ export const accounts: Account[] = [
   },
 ];
 
-export const transactions: Transaction[] = [
-  { id: 'txn_1', date: '2024-07-29', description: 'Netflix Subscription', amount: -799, type: 'Payment', status: 'Completed', balance: 450000.75 },
-  { id: 'txn_2', date: '2024-07-28', description: 'BigBasket Groceries', amount: -5540.50, type: 'Payment', status: 'Completed', balance: 450799.75 },
-  { id: 'txn_3', date: '2024-07-27', description: 'Salary Deposit', amount: 150000.00, type: 'Deposit', status: 'Completed', balance: 456340.25 },
-  { id: 'txn_4', date: '2024-07-25', description: 'Transfer to Savings', amount: -50000.00, type: 'Transfer', status: 'Completed', balance: 306340.25 },
-  { id: 'txn_5', date: '2024-07-22', description: 'Amazon.in', amount: -8500.00, type: 'Payment', status: 'Completed', balance: 356340.25 },
-  { id: 'txn_6', date: '2024-07-20', description: 'Petrol Pump', amount: -3000.00, type: 'Payment', status: 'Completed', balance: 364840.25 },
-  { id: 'txn_7', date: '2024-07-18', description: 'ATM Withdrawal', amount: -10000.00, type: 'Withdrawal', status: 'Completed', balance: 367840.25 },
-  { id: 'txn_8', date: '2024-07-15', description: 'Dinner at BBQ Nation', amount: -4500.00, type: 'Payment', status: 'Completed', balance: 377840.25 },
+const sampleTransactions: Omit<Transaction, 'id' | 'userId'>[] = [
+    { type: 'recharge', amount: 299, date: '2024-07-29', status: 'Completed' },
+    { type: 'electricity', amount: 1250, date: '2024-07-28', status: 'Completed' },
+    { type: 'lpg', amount: 850, date: '2024-07-27', status: 'Completed' },
 ];
+
 
 export const customers: Customer[] = [
   { id: 'cus_1', name: 'Rajesh Kumar', email: 'rajesh.k@example.com', accountNumber: '...7890', status: 'Active', joinedDate: '2023-01-15' },
@@ -143,13 +140,6 @@ export const services = [
   { id: 'service_7', name: 'Offers', icon: Gift, href: '#' },
   { id: 'service_8', name: 'Investments & Insurance', icon: Landmark, href: '/investments' },
   { id: 'service_9', name: 'Services', icon: ClipboardList, href: '/contact' },
-]
-
-export const bills: Bill[] = [
-  { id: 'bill_1', name: 'Mobile Postpaid', icon: Share2 },
-  { id: 'bill_2', name: 'DTH', icon: Share2 },
-  { id: 'bill_3', name: 'Electricity', icon: Share2 },
-  { id: 'bill_4', name: 'Credit Card', icon: Share2 },
 ]
 
 export const banks: Bank[] = [
