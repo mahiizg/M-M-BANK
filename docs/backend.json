@@ -1,0 +1,669 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the M&M Bank application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "mobile": {
+          "type": "string",
+          "description": "The user's mobile phone number."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "kycStatus": {
+          "type": "string",
+          "description": "The KYC (Know Your Customer) status of the user."
+        },
+        "walletBalance": {
+          "type": "number",
+          "description": "The user's current wallet balance."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "mobile",
+        "email",
+        "kycStatus",
+        "walletBalance"
+      ]
+    },
+    "RechargePlan": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "RechargePlan",
+      "type": "object",
+      "description": "Represents a mobile recharge plan offered by a specific operator.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the recharge plan."
+        },
+        "operator": {
+          "type": "string",
+          "description": "The mobile operator (e.g., Jio, Airtel)."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The recharge plan amount."
+        },
+        "validity": {
+          "type": "string",
+          "description": "The validity period of the recharge plan."
+        },
+        "dataPerDay": {
+          "type": "string",
+          "description": "The data offered per day with the recharge plan."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the recharge plan."
+        }
+      },
+      "required": [
+        "id",
+        "operator",
+        "amount",
+        "validity",
+        "dataPerDay",
+        "description"
+      ]
+    },
+    "ElectricityBill": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ElectricityBill",
+      "type": "object",
+      "description": "Represents an electricity bill for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the electricity bill."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N ElectricityBill)"
+        },
+        "consumerNumber": {
+          "type": "string",
+          "description": "The consumer number for the electricity bill."
+        },
+        "month": {
+          "type": "string",
+          "description": "The month for which the electricity bill is generated."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount of the electricity bill."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the electricity bill (pending or paid)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "consumerNumber",
+        "month",
+        "amount",
+        "status"
+      ]
+    },
+    "LpgBill": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "LpgBill",
+      "type": "object",
+      "description": "Represents an LPG (Liquefied Petroleum Gas) bill for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the LPG bill."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N LpgBill)"
+        },
+        "connectionId": {
+          "type": "string",
+          "description": "The connection ID for the LPG bill."
+        },
+        "month": {
+          "type": "string",
+          "description": "The month for which the LPG bill is generated."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount of the LPG bill."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the LPG bill (pending or paid)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "connectionId",
+        "month",
+        "amount",
+        "status"
+      ]
+    },
+    "Transaction": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Transaction",
+      "type": "object",
+      "description": "Represents a financial transaction made by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the transaction."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Transaction)"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of transaction (recharge, electricity, lpg)."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount of the transaction."
+        },
+        "date": {
+          "type": "string",
+          "description": "The date of the transaction.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the transaction."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "amount",
+        "date",
+        "status"
+      ]
+    },
+    "TrainTicket": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TrainTicket",
+      "type": "object",
+      "description": "Represents a train ticket booking.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the train ticket."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N TrainTicket)"
+        },
+        "trainNumber": {
+          "type": "string",
+          "description": "The train number for the ticket."
+        },
+        "journeyDate": {
+          "type": "string",
+          "description": "The date of the train journey.",
+          "format": "date-time"
+        },
+        "from": {
+          "type": "string",
+          "description": "The origin station for the journey."
+        },
+        "to": {
+          "type": "string",
+          "description": "The destination station for the journey."
+        },
+        "seatType": {
+          "type": "string",
+          "description": "The seat type for the train ticket."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount paid for the train ticket."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "trainNumber",
+        "journeyDate",
+        "from",
+        "to",
+        "seatType",
+        "amount"
+      ]
+    },
+    "BusTicket": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BusTicket",
+      "type": "object",
+      "description": "Represents a bus ticket booking.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the bus ticket."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N BusTicket)"
+        },
+        "busId": {
+          "type": "string",
+          "description": "The bus identifier."
+        },
+        "seatNumber": {
+          "type": "string",
+          "description": "The seat number on the bus."
+        },
+        "route": {
+          "type": "string",
+          "description": "The bus route."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount paid for the bus ticket."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "busId",
+        "seatNumber",
+        "route",
+        "amount"
+      ]
+    },
+    "MovieTicket": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "MovieTicket",
+      "type": "object",
+      "description": "Represents a movie ticket booking.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the movie ticket."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N MovieTicket)"
+        },
+        "movieName": {
+          "type": "string",
+          "description": "The name of the movie."
+        },
+        "theatre": {
+          "type": "string",
+          "description": "The name of the theatre."
+        },
+        "timing": {
+          "type": "string",
+          "description": "The movie show timing.",
+          "format": "date-time"
+        },
+        "seatNumbers": {
+          "type": "string",
+          "description": "The booked seat numbers."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount paid for the movie ticket."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "movieName",
+        "theatre",
+        "timing",
+        "seatNumbers",
+        "amount"
+      ]
+    },
+    "Investment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Investment",
+      "type": "object",
+      "description": "Represents a user's investment.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the investment."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Investment)"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of investment (FD, SIP, MutualFund, Insurance)."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the investment."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The invested amount."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the investment.",
+          "format": "date-time"
+        },
+        "maturityDate": {
+          "type": "string",
+          "description": "The maturity date of the investment.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "status",
+        "amount",
+        "startDate",
+        "maturityDate"
+      ]
+    },
+    "Faq": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Faq",
+      "type": "object",
+      "description": "Represents a frequently asked question and its answer.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FAQ."
+        },
+        "question": {
+          "type": "string",
+          "description": "The FAQ question."
+        },
+        "answer": {
+          "type": "string",
+          "description": "The answer to the FAQ."
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "answer"
+      ]
+    },
+    "SupportMessage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SupportMessage",
+      "type": "object",
+      "description": "Represents a support message from a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the support message."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N SupportMessage)"
+        },
+        "message": {
+          "type": "string",
+          "description": "The support message content."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of the message.",
+          "format": "date-time"
+        },
+        "handledBy": {
+          "type": "string",
+          "description": "The admin user who handled the message."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "message",
+        "timestamp"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/recharge_plans/{rechargePlanId}",
+        "definition": {
+          "entityName": "RechargePlan",
+          "schema": {
+            "$ref": "#/backend/entities/RechargePlan"
+          },
+          "description": "Stores recharge plans offered by various operators. Publicly readable.",
+          "params": [
+            {
+              "name": "rechargePlanId",
+              "description": "The unique identifier for the recharge plan."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/electricity_bills/{billId}",
+        "definition": {
+          "entityName": "ElectricityBill",
+          "schema": {
+            "$ref": "#/backend/entities/ElectricityBill"
+          },
+          "description": "Stores electricity bills for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "billId",
+              "description": "The unique identifier for the electricity bill."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/lpg_bills/{billId}",
+        "definition": {
+          "entityName": "LpgBill",
+          "schema": {
+            "$ref": "#/backend/entities/LpgBill"
+          },
+          "description": "Stores LPG bills for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "billId",
+              "description": "The unique identifier for the LPG bill."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/transactions/{transactionId}",
+        "definition": {
+          "entityName": "Transaction",
+          "schema": {
+            "$ref": "#/backend/entities/Transaction"
+          },
+          "description": "Stores transaction history for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "transactionId",
+              "description": "The unique identifier for the transaction."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/train_tickets/{ticketId}",
+        "definition": {
+          "entityName": "TrainTicket",
+          "schema": {
+            "$ref": "#/backend/entities/TrainTicket"
+          },
+          "description": "Stores train ticket bookings for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "ticketId",
+              "description": "The unique identifier for the train ticket."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/bus_tickets/{ticketId}",
+        "definition": {
+          "entityName": "BusTicket",
+          "schema": {
+            "$ref": "#/backend/entities/BusTicket"
+          },
+          "description": "Stores bus ticket bookings for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "ticketId",
+              "description": "The unique identifier for the bus ticket."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/movie_tickets/{ticketId}",
+        "definition": {
+          "entityName": "MovieTicket",
+          "schema": {
+            "$ref": "#/backend/entities/MovieTicket"
+          },
+          "description": "Stores movie ticket bookings for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "ticketId",
+              "description": "The unique identifier for the movie ticket."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/investments/{investmentId}",
+        "definition": {
+          "entityName": "Investment",
+          "schema": {
+            "$ref": "#/backend/entities/Investment"
+          },
+          "description": "Stores investment details for each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "investmentId",
+              "description": "The unique identifier for the investment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/faqs/{faqId}",
+        "definition": {
+          "entityName": "Faq",
+          "schema": {
+            "$ref": "#/backend/entities/Faq"
+          },
+          "description": "Stores frequently asked questions and their answers. Publicly readable.",
+          "params": [
+            {
+              "name": "faqId",
+              "description": "The unique identifier for the FAQ."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/support_messages/{messageId}",
+        "definition": {
+          "entityName": "SupportMessage",
+          "schema": {
+            "$ref": "#/backend/entities/SupportMessage"
+          },
+          "description": "Stores support messages from each user. Secured by user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "messageId",
+              "description": "The unique identifier for the support message."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to ensure security, scalability, and ease of debugging, adhering to the core design principles of Authorization Independence, Clarity of Intent, DBAC (Database-Based Access Control), and QAPs (Rules are not Filters).  \n\n**Authorization Independence:**  Each collection uses path-based ownership or membership maps to avoid hierarchical authorization dependencies. Specifically, user-owned data (e.g., electricity bills, transactions, train tickets) are stored under the `/users/{userId}` path, making authorization rules simple and efficient.\n\n**Structural Segregation:**  Collections are segregated based on their security requirements.  For instance, user profiles are stored in `/users/{userId}`, recharge plans are stored in `/recharge_plans`. This separation ensures that all documents within a single collection share identical security needs, greatly simplifying rule creation.\n\n**Access Modeling:** Path-based ownership (`/users/{userId}/electricity_bills/{billId}`) is the primary access model for user-owned data.  \n\n**QAPs Support:** Segregation ensures secure `list` operations, as rules can be applied at the collection level without filtering data based on document content.\n\nDenormalization is not required in this schema because path-based ownership is implemented for user-owned resources. This approach avoids the need for `get()` calls in the security rules, enabling atomic operations and improving scalability."
+  }
+}

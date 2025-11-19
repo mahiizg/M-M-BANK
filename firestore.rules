@@ -1,0 +1,124 @@
+/**
+ * @file Firestore Security Rules for M&M Bank Application
+ * @description This ruleset enforces a strict user-ownership model for personal data,
+ *              while allowing public read access to non-sensitive data like recharge plans and FAQs.
+ *
+ * @dataStructure
+ * - /users/{userId}: Stores user profiles. Only the authenticated user can read/write their own profile.
+ * - /recharge_plans/{rechargePlanId}: Stores publicly readable recharge plans.
+ * - /users/{userId}/electricity_bills/{billId}: Stores user-specific electricity bills.
+ * - /users/{userId}/lpg_bills/{billId}: Stores user-specific LPG bills.
+ * - /users/{userId}/transactions/{transactionId}: Stores user-specific transaction history.
+ * - /users/{userId}/train_tickets/{ticketId}: Stores user-specific train ticket bookings.
+ * - /users/{userId}/bus_tickets/{ticketId}: Stores user-specific bus ticket bookings.
+ * - /users/{userId}/movie_tickets/{ticketId}: Stores user-specific movie ticket bookings.
+ * - /users/{userId}/investments/{investmentId}: Stores user-specific investment details.
+ * - /faqs/{faqId}: Stores publicly readable FAQs.
+ * - /users/{userId}/support_messages/{messageId}: Stores user-specific support messages.
+ *
+ * @keySecurityDecisions
+ * - User listing is disallowed.
+ * - All data nested under /users/{userId} is strictly controlled by the authenticated user.
+ * - Public data (recharge plans, FAQs) is readable by anyone.
+ * - Authorization decisions are based on `request.auth.uid` and path parameters.
+ *
+ * @denormalizationForAuthorization
+ * - Path-based ownership is used to simplify rules, avoiding the need for `get()` calls.
+ *   For example, rules for `/users/{userId}/electricity_bills/{billId}` directly check
+ *   if `request.auth.uid == userId` instead of fetching user data.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Manages user profiles. Users can only read/write their own profile.
+     * @path /users/{userId}
+     */
+    match /users/{userId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Allows public read access to recharge plans.
+     * @path /recharge_plans/{rechargePlanId}
+     */
+    match /recharge_plans/{rechargePlanId} {
+      allow read: if true;
+      allow write, update, delete, create: if false;
+    }
+
+    /**
+     * @description Manages user-specific electricity bills.
+     * @path /users/{userId}/electricity_bills/{billId}
+     */
+    match /users/{userId}/electricity_bills/{billId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific LPG bills.
+     * @path /users/{userId}/lpg_bills/{billId}
+     */
+    match /users/{userId}/lpg_bills/{billId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific transaction history.
+     * @path /users/{userId}/transactions/{transactionId}
+     */
+    match /users/{userId}/transactions/{transactionId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific train ticket bookings.
+     * @path /users/{userId}/train_tickets/{ticketId}
+     */
+    match /users/{userId}/train_tickets/{ticketId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific bus ticket bookings.
+     * @path /users/{userId}/bus_tickets/{ticketId}
+     */
+    match /users/{userId}/bus_tickets/{ticketId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific movie ticket bookings.
+     * @path /users/{userId}/movie_tickets/{ticketId}
+     */
+    match /users/{userId}/movie_tickets/{ticketId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Manages user-specific investment details.
+     * @path /users/{userId}/investments/{investmentId}
+     */
+    match /users/{userId}/investments/{investmentId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+
+    /**
+     * @description Allows public read access to FAQs.
+     * @path /faqs/{faqId}
+     */
+    match /faqs/{faqId} {
+      allow read: if true;
+      allow write, update, delete, create: if false;
+    }
+
+    /**
+     * @description Manages user-specific support messages.
+     * @path /users/{userId}/support_messages/{messageId}
+     */
+    match /users/{userId}/support_messages/{messageId} {
+      allow read, write, update, delete, create: if request.auth.uid == userId;
+    }
+  }
+}
