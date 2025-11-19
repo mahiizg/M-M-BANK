@@ -1,3 +1,4 @@
+
 import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, ListTodo, Share2, Ticket, Users } from "lucide-react";
 
 export type Account = {
@@ -57,6 +58,13 @@ export type PendingRequest = {
   amount: number;
   note: string;
 };
+
+export const rechargePlans = [
+    { id: 'plan_1', amount: 199, validity: '28 days', data: '1.5 GB/day' },
+    { id: 'plan_2', amount: 299, validity: '28 days', data: '2 GB/day' },
+    { id: 'plan_3', amount: 499, validity: '56 days', data: '2 GB/day' },
+    { id: 'plan_4', amount: 719, validity: '84 days', data: '2.5 GB/day' },
+];
 
 
 export const user = {
@@ -126,16 +134,16 @@ export const people: Person[] = [
   { id: 'ppl_7', name: 'Arjun Das', avatar: 'https://i.pravatar.cc/150?u=arjun', upiId: 'arjun.das@hdfc' },
 ]
 
-export const services: Bill[] = [
-  { id: 'service_1', name: 'Accounts & Deposits', icon: Users },
-  { id: 'service_2', name: 'Fund Transfer', icon: ArrowRightLeft },
-  { id: 'service_3', name: 'Recharge', icon: Battery },
-  { id: 'service_4', name: 'Bill Payment', icon: Calendar },
-  { id: 'service_5', name: 'Ticketing', icon: Ticket },
-  { id: 'service_6', name: 'Cards & Loans', icon: CreditCard },
-  { id: 'service_7', name: 'Offers', icon: Gift },
-  { id: 'service_8', name: 'Investments & Insurance', icon: Landmark },
-  { id: 'service_9', name: 'Services', icon: ClipboardList },
+export const services = [
+  { id: 'service_1', name: 'Accounts & Deposits', icon: Users, href: '/profile' },
+  { id: 'service_2', name: 'Fund Transfer', icon: ArrowRightLeft, href: '/transfer' },
+  { id: 'service_3', name: 'Recharge', icon: Battery, href: '/recharge' },
+  { id: 'service_4', name: 'Bill Payment', icon: Calendar, href: '/bills' },
+  { id: 'service_5', name: 'Ticketing', icon: Ticket, href: '/ticketing' },
+  { id: 'service_6', name: 'Cards & Loans', icon: CreditCard, href: '#' },
+  { id: 'service_7', name: 'Offers', icon: Gift, href: '#' },
+  { id: 'service_8', name: 'Investments & Insurance', icon: Landmark, href: '/investments' },
+  { id: 'service_9', name: 'Services', icon: ClipboardList, href: '/contact' },
 ]
 
 export const bills: Bill[] = [
@@ -154,27 +162,21 @@ export const banks: Bank[] = [
     { id: 'bank_6', name: 'State Bank of India (SBI)' },
     { id: 'bank_7', name: 'Punjab National Bank (PNB)' },
     { id: 'bank_8', name: 'Bank of Baroda' },
-    { id: 'bank_9', name: 'Union Bank of India' },
-    { id: 'bank_10', name: 'Canara Bank' },
-]
+    { id: 'bank_9', name: 'Yes Bank' },
+    { id: 'bank_10', name: 'IDFC First Bank' },
+];
 
 export const pendingRequests: PendingRequest[] = [
-  { 
-    id: 'req_1', 
-    person: people[1],
-    amount: 1500.00,
-    note: 'For the concert tickets',
-  },
-  { 
-    id: 'req_2', 
+  {
+    id: "req_1",
     person: people[2],
-    amount: 850.50,
-    note: 'Dinner last night',
+    amount: 1500,
+    note: "For the weekend trip!",
   },
-    { 
-    id: 'req_3', 
+  {
+    id: "req_2",
     person: people[4],
-    amount: 2500.00,
-    note: 'Trip contribution',
+    amount: 850,
+    note: "Dinner yesterday",
   },
 ];
