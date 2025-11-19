@@ -17,7 +17,7 @@ export type Account = {
 export type Transaction = {
   id: string;
   userId: string;
-  type: 'recharge' | 'electricity' | 'lpg';
+  type: 'recharge' | 'electricity' | 'lpg' | 'deposit' | 'withdrawal' | 'transfer' | 'payment';
   amount: number;
   date: string;
   status: string;
@@ -102,12 +102,6 @@ export const accounts: Account[] = [
       cvv: '456'
     }
   },
-];
-
-const sampleTransactions: Omit<Transaction, 'id' | 'userId'>[] = [
-    { type: 'recharge', amount: 299, date: '2024-07-29', status: 'Completed' },
-    { type: 'electricity', amount: 1250, date: '2024-07-28', status: 'Completed' },
-    { type: 'lpg', amount: 850, date: '2024-07-27', status: 'Completed' },
 ];
 
 

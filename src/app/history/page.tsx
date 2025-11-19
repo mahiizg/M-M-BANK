@@ -1,3 +1,6 @@
+
+'use client';
+
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import {
   Card,
@@ -24,7 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { transactions } from "@/lib/data";
 import {
   Pagination,
   PaginationContent,
@@ -34,6 +36,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useUser, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query } from "firebase/firestore";
+import { useCollection } from "@/firebase/firestore/use-collection";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface Transaction {
+    id: string;
+    description: string;
+    type: string;
+    status: 'Completed' | 'Pending' | 'Failed';
+    amount: number;
+    balance: number;
+    date: string;
+}
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
@@ -43,6 +59,16 @@ const formatCurrency = (amount: number) => {
 };
 
 export default function HistoryPage() {
+  const { user } = useUser();
+  const firestore = useFirestore();
+
+  const transactionsQuery = useMemoFirebase(() => {
+    if (!firestore || !user) return null;
+    return query(collection(firestore, `users/${user.uid}/transactions`));
+  }, [firestore, user]);
+
+  const { data: transactions, isLoading } = useCollection<Transaction>(transactionsQuery);
+
   return (
     <UserDashboardLayout>
       <Card className="shadow-lg">
@@ -84,7 +110,17 @@ export default function HistoryPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((txn) => (
+                {isLoading && Array.from({ length: 5 }).map((_, i) => (
+                    <TableRow key={i}>
+                        <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                        <TableCell><Skeleton className="h-6 w-20 rounded-full" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-20 ml-auto" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-20 ml-auto" /></TableCell>
+                    </TableRow>
+                ))}
+                {transactions?.map((txn) => (
                   <TableRow key={txn.id}>
                     <TableCell>{txn.date}</TableCell>
                     <TableCell className="font-medium">{txn.description}</TableCell>

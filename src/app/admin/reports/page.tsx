@@ -1,3 +1,6 @@
+
+'use client';
+
 import { AdminDashboardLayout } from "@/components/layout/admin-dashboard-layout";
 import {
   Card,
@@ -24,7 +27,18 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
-import { transactions } from "@/lib/data";
+import { useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query } from "firebase/firestore";
+import { useCollection } from "@/firebase/firestore/use-collection";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface Transaction {
+    id: string;
+    description: string;
+    type: string;
+    amount: number;
+    date: string;
+}
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
@@ -33,10 +47,22 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
-const totalDeposits = transactions.filter(t => t.amount > 0).reduce((sum, t) => sum + t.amount, 0);
-const totalWithdrawals = transactions.filter(t => t.amount < 0).reduce((sum, t) => sum + t.amount, 0);
 
 export default function AdminReportsPage() {
+    const firestore = useFirestore();
+
+    // Note: In a real admin dashboard, you'd likely query across all users, which requires different security rules and backend logic.
+    // For this example, we'll just fetch from a single, hardcoded user for demonstration.
+    const transactionsQuery = useMemoFirebase(() => {
+        if (!firestore) return null;
+        return query(collection(firestore, `users/placeholder-user-id/transactions`));
+    }, [firestore]);
+
+    const { data: transactions, isLoading } = useCollection<Transaction>(transactionsQuery);
+
+    const totalDeposits = transactions?.filter(t => t.amount > 0).reduce((sum, t) => sum + t.amount, 0) || 0;
+    const totalWithdrawals = transactions?.filter(t => t.amount < 0).reduce((sum, t) => sum + t.amount, 0) || 0;
+
   return (
     <AdminDashboardLayout>
       <Card className="shadow-lg">
@@ -98,7 +124,15 @@ export default function AdminReportsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((txn) => (
+                {isLoading && Array.from({length: 5}).map((_, i) => (
+                    <TableRow key={i}>
+                        <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                        <TableCell><Skeleton className="h-4 w-20 ml-auto" /></TableCell>
+                    </TableRow>
+                ))}
+                {transactions?.map((txn) => (
                   <TableRow key={txn.id}>
                     <TableCell>{txn.date}</TableCell>
                     <TableCell className="font-medium">{txn.description}</TableCell>
