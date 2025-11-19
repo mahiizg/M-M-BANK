@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
@@ -89,7 +90,11 @@ export default function ElectricityBillPage() {
                                                 <p className="text-muted-foreground">Your bill for {bill.month} is due.</p>
                                                 <p className="text-2xl font-bold">₹{bill.amount.toFixed(2)}</p>
                                             </div>
-                                            <Button size="lg">Pay Now</Button>
+                                            <Button size="lg" asChild>
+                                                <Link href={`/transfer?amount=${bill.amount}&note=${encodeURIComponent(`Electricity Bill: ${bill.month}`)}&upiId=electricity.board@mmbank`}>
+                                                    Pay Now
+                                                </Link>
+                                            </Button>
                                         </div>
                                     )}
                                 </div>
