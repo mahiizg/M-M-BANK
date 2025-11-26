@@ -17,7 +17,7 @@ import {
   HandCoins,
   FileText,
   PiggyBank,
-  Gold,
+  Gem,
   MapPin,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -105,7 +105,7 @@ interface ChatMessage {
 const loanOptions = [
     { label: "Apply for New Loan", icon: FileText, href: "#" },
     { label: "EMI @ UPI", icon: PiggyBank, href: "#" },
-    { label: "Gold Loan", icon: Gold, href: "#" },
+    { label: "Gold Loan", icon: Gem, href: "#" },
     { label: "Track New Loan", icon: MapPin, href: "#" },
 ];
 
