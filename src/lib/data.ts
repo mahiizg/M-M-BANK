@@ -127,7 +127,7 @@ export const people: Person[] = [
 export const services = [
     { id: 'service_1', name: 'Bill Pay, Recharge, FASTag', icon: Receipt, href: '/bills' },
     { id: 'service_2', name: 'Offers', icon: Gift, href: '/offers' },
-    { id: 'service_3', name: 'Accounts & FD/RD', icon: UsersRound, href: '#' },
+    { id: 'service_3', name: 'Accounts & FD/RD', icon: UsersRound, href: '/accounts' },
     { id: 'service_4', name: 'Loans', icon: HandCoins, href: '#' },
     { id: 'service_5', name: 'Demat/Mutual Funds', icon: TrendingUp, href: '/investments' },
     { id: 'service_6', name: 'UPI Payments', icon: Wallet, href: '/transfer' },
