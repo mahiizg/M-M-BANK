@@ -27,18 +27,8 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
-import { useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query } from "firebase/firestore";
-import { useCollection } from "@/firebase/firestore/use-collection";
 import { Skeleton } from "@/components/ui/skeleton";
-
-interface Transaction {
-    id: string;
-    description: string;
-    type: string;
-    amount: number;
-    date: string;
-}
+import { transactions as staticTransactions, type Transaction } from "@/lib/data";
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
@@ -49,16 +39,8 @@ const formatCurrency = (amount: number) => {
 
 
 export default function AdminReportsPage() {
-    const firestore = useFirestore();
-
-    // Note: In a real admin dashboard, you'd likely query across all users, which requires different security rules and backend logic.
-    // For this example, we'll just fetch from a single, hardcoded user for demonstration.
-    const transactionsQuery = useMemoFirebase(() => {
-        if (!firestore) return null;
-        return query(collection(firestore, `users/placeholder-user-id/transactions`));
-    }, [firestore]);
-
-    const { data: transactions, isLoading } = useCollection<Transaction>(transactionsQuery);
+    const transactions = staticTransactions;
+    const isLoading = false;
 
     const totalDeposits = transactions?.filter(t => t.amount > 0).reduce((sum, t) => sum + t.amount, 0) || 0;
     const totalWithdrawals = transactions?.filter(t => t.amount < 0).reduce((sum, t) => sum + t.amount, 0) || 0;
