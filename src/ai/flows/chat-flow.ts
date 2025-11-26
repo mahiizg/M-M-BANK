@@ -28,6 +28,7 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
 const prompt = ai.definePrompt({
   name: 'chatPrompt',
   input: { schema: ChatInputSchema },
+  output: { schema: ChatOutputSchema },
   prompt: `You are a friendly and helpful banking assistant for M&M Bank.
 Your goal is to answer the user's questions in simple, clear, and easy-to-understand English.
 Avoid jargon and complex financial terms.
@@ -42,10 +43,7 @@ const chatFlow = ai.defineFlow(
     outputSchema: ChatOutputSchema,
   },
   async (input) => {
-    const { text } = await ai.generate({
-      prompt: await prompt.render({ input }),
-    });
-
-    return { response: text };
+    const { output } = await prompt(input);
+    return output!;
   }
 );
