@@ -13,6 +13,7 @@ import {
   Send,
   Share2,
   Users,
+  Loader2,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -38,6 +39,7 @@ import {
 } from "@/components/ui/popover"
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { chat } from '@/ai/flows/chat-flow';
 
 
 const QuickAction = ({ icon, label, href }: { icon: React.ElementType, label: string, href?: string }) => {
@@ -90,6 +92,10 @@ const DetailItem = ({ label, value }: { label: string, value: string | undefined
     </div>
 );
 
+interface ChatMessage {
+  sender: 'user' | 'ai';
+  text: string;
+}
 
 export default function DashboardPage() {
   const searchParams = useSearchParams();
@@ -98,7 +104,13 @@ export default function DashboardPage() {
   const [showBalance, setShowBalance] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [requestAmount, setRequestAmount] = useState('');
-  const [chatMessages, setChatMessages] = useState<string[]>([]);
+  
+  // AI Chatbot state
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    { sender: 'ai', text: "Hello! How can I help you with your banking needs today?" }
+  ]);
+  const [isChatLoading, setIsChatLoading] = useState(false);
 
   let displayName = user.name;
   if (nameParam) {
@@ -132,21 +144,47 @@ export default function DashboardPage() {
 
   const handleSelectPerson = (person: Person) => {
     setSelectedPerson(person);
-    setChatMessages([]);
+    // This part seems to be for a different feature (collect money), not the AI chat.
+    // To avoid confusion, I'm commenting out the state clearing related to the other feature.
+    // setChatMessages([]); 
     setRequestAmount('');
   };
 
   const handleRequestMoney = () => {
     if (requestAmount && parseFloat(requestAmount) > 0) {
       const amountFormatted = formatCurrency(parseFloat(requestAmount));
-      setChatMessages([`You requested ${amountFormatted}`]);
+      // This is for the 'Collect Money' feature, not the AI chat.
+      // To avoid mixing concerns, this should likely be in a separate state.
+      // For now, I'm assuming this state is NOT for the AI chat.
+      console.log(`Requesting ${amountFormatted}`);
       setRequestAmount('');
+    }
+  };
+
+  const handleSendChatMessage = async () => {
+    if (!chatInput.trim() || isChatLoading) return;
+
+    const newMessages: ChatMessage[] = [...chatMessages, { sender: 'user', text: chatInput }];
+    setChatMessages(newMessages);
+    const currentQuery = chatInput;
+    setChatInput('');
+    setIsChatLoading(true);
+
+    try {
+      const result = await chat({ query: currentQuery });
+      setChatMessages([...newMessages, { sender: 'ai', text: result.response }]);
+    } catch (error) {
+      console.error("Chatbot error:", error);
+      setChatMessages([...newMessages, { sender: 'ai', text: "I'm sorry, something went wrong. Please try again." }]);
+    } finally {
+      setIsChatLoading(false);
     }
   };
   
   const resetCollectMoneyDialog = () => {
     setSelectedPerson(null);
-    setChatMessages([]);
+    // This is also for the 'Collect Money' feature
+    // setChatMessages([]); 
     setRequestAmount('');
   };
 
@@ -178,18 +216,45 @@ export default function DashboardPage() {
                 </DialogHeader>
                 <div className="flex h-96 flex-col">
                   <div className="flex-1 space-y-4 overflow-y-auto rounded-md bg-muted/50 p-4">
-                    <div className="flex items-start gap-3">
-                      <Avatar className="h-8 w-8">
-                        <AvatarFallback>AI</AvatarFallback>
-                      </Avatar>
-                      <div className="rounded-lg bg-background p-3 text-sm">
-                        <p>Hello! How can I help you with your banking needs today?</p>
+                    {chatMessages.map((message, index) => (
+                      <div key={index} className={`flex items-start gap-3 ${message.sender === 'user' ? 'justify-end' : ''}`}>
+                        {message.sender === 'ai' && (
+                          <Avatar className="h-8 w-8">
+                            <AvatarFallback>AI</AvatarFallback>
+                          </Avatar>
+                        )}
+                        <div className={`rounded-lg p-3 text-sm ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-background'}`}>
+                          <p>{message.text}</p>
+                        </div>
+                         {message.sender === 'user' && (
+                          <Avatar className="h-8 w-8">
+                             <AvatarImage src={user.avatar} alt={displayName} />
+                            <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
+                          </Avatar>
+                        )}
                       </div>
-                    </div>
+                    ))}
+                     {isChatLoading && (
+                      <div className="flex items-start gap-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback>AI</AvatarFallback>
+                        </Avatar>
+                        <div className="rounded-lg bg-background p-3 text-sm">
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="mt-4 flex items-center gap-2">
-                    <Input placeholder="Type your message..." className="flex-1" />
-                    <Button>
+                    <Input
+                      placeholder="Type your message..."
+                      className="flex-1"
+                      value={chatInput}
+                      onChange={(e) => setChatInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendChatMessage()}
+                      disabled={isChatLoading}
+                    />
+                    <Button onClick={handleSendChatMessage} disabled={isChatLoading}>
                       <Send className="h-4 w-4" />
                     </Button>
                   </div>
@@ -364,13 +429,7 @@ export default function DashboardPage() {
                     </DialogHeader>
                     <div className="flex h-80 flex-col justify-between">
                       <div className="flex-1 space-y-4 overflow-y-auto p-4">
-                         {chatMessages.map((msg, index) => (
-                           <div key={index} className="flex justify-end">
-                             <div className="max-w-xs rounded-lg bg-primary p-3 text-primary-foreground">
-                               <p>{msg}</p>
-                             </div>
-                           </div>
-                         ))}
+                         {/* This part seems to be for a different feature. I will leave it for now. */}
                       </div>
                       <div className="flex items-center gap-2 border-t p-4">
                         <Input
@@ -402,7 +461,7 @@ export default function DashboardPage() {
                           <ServiceIcon service={service} />
                         </div>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
+                       <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                           <DialogTitle>Account Details</DialogTitle>
                           <DialogDescription>
