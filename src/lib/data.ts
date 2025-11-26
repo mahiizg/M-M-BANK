@@ -125,14 +125,14 @@ export const people: Person[] = [
 ]
 
 export const services = [
-  { id: 'service_1', name: 'Bill Pay, Recharge', icon: Receipt, href: '/bills' },
-  { id: 'service_2', name: 'Offers', icon: Gift, href: '#' },
-  { id: 'service_3', name: 'Accounts & FD/RD', icon: UsersRound, href: '/profile' },
-  { id: 'service_4', name: 'Loans', icon: HandCoins, href: '#' },
-  { id: 'service_5', name: 'Demat/Mutual Funds', icon: TrendingUp, href: '/investments' },
-  { id: 'service_6', name: 'UPI Payments', icon: Wallet, href: '/transfer' },
-  { id: 'service_7', name: 'Services', icon: Settings, href: '/contact' },
-  { id: 'service_8', name: 'Invest', icon: Landmark, href: '/investments' },
+    { id: 'service_1', name: 'Bill Pay, Recharge, FASTag', icon: Receipt, href: '/bills' },
+    { id: 'service_2', name: 'Offers', icon: Gift, href: '/offers' },
+    { id: 'service_3', name: 'Accounts & FD/RD', icon: UsersRound, href: '#' },
+    { id: 'service_4', name: 'Loans', icon: HandCoins, href: '#' },
+    { id: 'service_5', name: 'Demat/Mutual Funds', icon: TrendingUp, href: '/investments' },
+    { id: 'service_6', name: 'UPI Payments', icon: Wallet, href: '/transfer' },
+    { id: 'service_7', name: 'Services', icon: Settings, href: '/contact' },
+    { id: 'service_8', name: 'Invest', icon: Landmark, href: '/investments' },
 ];
 
 export const banks: Bank[] = [
