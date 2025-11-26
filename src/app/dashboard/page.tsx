@@ -451,37 +451,8 @@ export default function DashboardPage() {
 
           {/* Services Grid */}
           <section>
-             <div className="grid grid-cols-3 gap-4">
+             <div className="grid grid-cols-4 gap-4">
               {services.map((service) => {
-                if (service.id === 'service_1') { // Accounts & Deposits
-                  return (
-                    <Dialog key={service.id}>
-                      <DialogTrigger asChild>
-                        <div>
-                          <ServiceIcon service={service} />
-                        </div>
-                      </DialogTrigger>
-                       <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>Account Details</DialogTitle>
-                          <DialogDescription>
-                            Your primary account and personal information.
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4 py-4">
-                          <DetailItem label="Full Name" value={displayName} />
-                          <DetailItem label="Email Address" value={email || user.email} />
-                          <DetailItem label="UPI ID" value={upiId} />
-                        </div>
-                        <DialogFooter>
-                            <Button asChild variant="outline">
-                                <Link href="/">Create New Account</Link>
-                            </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                  );
-                }
                 return <ServiceIcon key={service.id} service={service} />;
               })}
             </div>

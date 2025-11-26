@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, Ticket, Users, Smartphone, Zap, Flame, Droplets, ListTodo } from "lucide-react";
+import { ArrowRightLeft, CreditCard, Gift, Landmark, Ticket, Users, ClipboardList, Wallet, Receipt, ShoppingCart, TrendingUp, HandCoins, UsersRound, Settings } from "lucide-react";
 
 export type Account = {
   id: string;
@@ -125,16 +125,15 @@ export const people: Person[] = [
 ]
 
 export const services = [
-  { id: 'service_1', name: 'Accounts & Deposits', icon: Users, href: '/profile' },
-  { id: 'service_2', name: 'Fund Transfer', icon: ArrowRightLeft, href: '/transfer' },
-  { id: 'service_3', name: 'Recharge', icon: Battery, href: '/recharge' },
-  { id: 'service_4', name: 'Bill Payment', icon: Calendar, href: '/bills' },
-  { id: 'service_5', name: 'Ticketing', icon: Ticket, href: '/ticketing' },
-  { id: 'service_6', name: 'Cards & Loans', icon: CreditCard, href: '#' },
-  { id: 'service_7', name: 'Offers', icon: Gift, href: '#' },
-  { id: 'service_8', name: 'Investments & Insurance', icon: Landmark, href: '/investments' },
-  { id: 'service_9', name: 'Services', icon: ClipboardList, href: '/contact' },
-]
+  { id: 'service_1', name: 'Bill Pay, Recharge', icon: Receipt, href: '/bills' },
+  { id: 'service_2', name: 'Offers', icon: Gift, href: '#' },
+  { id: 'service_3', name: 'Accounts & FD/RD', icon: UsersRound, href: '/profile' },
+  { id: 'service_4', name: 'Loans', icon: HandCoins, href: '#' },
+  { id: 'service_5', name: 'Demat/Mutual Funds', icon: TrendingUp, href: '/investments' },
+  { id: 'service_6', name: 'UPI Payments', icon: Wallet, href: '/transfer' },
+  { id: 'service_7', name: 'Services', icon: Settings, href: '/contact' },
+  { id: 'service_8', name: 'Invest', icon: Landmark, href: '/investments' },
+];
 
 export const banks: Bank[] = [
     { id: 'bank_1', name: 'HDFC Bank' },
