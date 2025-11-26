@@ -3,34 +3,76 @@
 
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Smartphone, Zap, Flame, Droplets } from "lucide-react";
+import { ArrowRight, Smartphone, Zap, Flame, Droplets, CreditCard, Car, ShieldCheck, Youtube, Satellite, Building } from "lucide-react";
 import Link from "next/link";
 
 const billOptions = [
-  {
-    href: "/recharge",
-    icon: Smartphone,
-    label: "Mobile Recharge",
-    description: "Recharge your prepaid mobile number.",
-  },
-  {
-    href: "/bills/electricity",
-    icon: Zap,
-    label: "Electricity Bill",
-    description: "Pay your electricity bill.",
-  },
-  {
-    href: "/bills/lpg",
-    icon: Flame,
-    label: "LPG Gas Cylinder",
-    description: "Book and pay for your gas cylinder.",
-  },
-  {
-    href: "#",
-    icon: Droplets,
-    label: "Water Bill",
-    description: "Pay your water bill (coming soon).",
-  },
+    {
+        href: "#",
+        icon: CreditCard,
+        label: "ICICI Bank Credit Card",
+        description: "Pay your ICICI Bank credit card bill.",
+    },
+    {
+        href: "#",
+        icon: CreditCard,
+        label: "Other Bank Credit Card",
+        description: "Pay any other bank's credit card bill.",
+    },
+    {
+        href: "/recharge",
+        icon: Smartphone,
+        label: "Mobile Prepaid",
+        description: "Recharge your prepaid mobile number.",
+    },
+    {
+        href: "#",
+        icon: Smartphone,
+        label: "Mobile Postpaid",
+        description: "Pay your postpaid mobile bill.",
+    },
+    {
+        href: "/bills/electricity",
+        icon: Zap,
+        label: "Electricity",
+        description: "Pay your electricity bill.",
+    },
+    {
+        href: "#",
+        icon: Car,
+        label: "FASTag",
+        description: "Recharge your FASTag for tolls.",
+    },
+    {
+        href: "#",
+        icon: ShieldCheck,
+        label: "LIC/Insurance",
+        description: "Pay your insurance premiums.",
+    },
+    {
+        href: "#",
+        icon: Youtube,
+        label: "Subscriptions",
+        description: "Manage and pay for your subscriptions.",
+    },
+    {
+        href: "#",
+        icon: Satellite,
+        label: "DTH",
+        description: "Recharge your DTH connection.",
+    },
+    {
+        href: "/bills/lpg",
+        icon: Flame,
+        label: "Piped Gas",
+        description: "Pay your piped gas bill.",
+    },
+    {
+        href: "#",
+        icon: Building,
+        label: "Municipal Tax",
+        description: "Pay your property or municipal tax.",
+    },
 ];
 
 export default function BillPaymentPage() {
@@ -42,11 +84,11 @@ export default function BillPaymentPage() {
           <CardDescription>Select a category to pay your bills.</CardDescription>
         </CardHeader>
         <CardContent>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {billOptions.map((option) => (
                 <Link href={option.href} key={option.label}>
                     <div
-                    className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50 cursor-pointer"
+                    className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50 cursor-pointer h-full"
                     >
                         <div className="flex items-center gap-4">
                             <option.icon className="h-8 w-8 text-primary" />
