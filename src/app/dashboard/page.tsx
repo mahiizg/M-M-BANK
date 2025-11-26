@@ -14,6 +14,11 @@ import {
   Share2,
   Users,
   Loader2,
+  HandCoins,
+  FileText,
+  PiggyBank,
+  Gold,
+  MapPin,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -63,7 +68,7 @@ const QuickAction = ({ icon, label, href }: { icon: React.ElementType, label: st
   return content;
 };
 
-const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: React.ElementType, href?: string } }) => {
+const ServiceIcon = ({ service, onClick }: { service: { id: string, name: string, icon: React.ElementType, href?: string }, onClick?: () => void }) => {
   const Icon = service.icon;
 
   const content = (
@@ -73,7 +78,7 @@ const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: R
     </div>
   );
 
-  if (service.href) {
+  if (service.href && service.href !== '#') {
     return (
         <Link href={service.href} key={service.id}>
             {content}
@@ -81,9 +86,9 @@ const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: R
     );
   }
 
-  // Fallback for items that should be Dialogs or other actions
-  return <div className='cursor-pointer'>{content}</div>;
+  return <div className='cursor-pointer' onClick={onClick}>{content}</div>;
 };
+
 
 const DetailItem = ({ label, value }: { label: string, value: string | undefined }) => (
     <div>
@@ -97,6 +102,13 @@ interface ChatMessage {
   text: string;
 }
 
+const loanOptions = [
+    { label: "Apply for New Loan", icon: FileText, href: "#" },
+    { label: "EMI @ UPI", icon: PiggyBank, href: "#" },
+    { label: "Gold Loan", icon: Gold, href: "#" },
+    { label: "Track New Loan", icon: MapPin, href: "#" },
+];
+
 export default function DashboardPage() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
@@ -104,6 +116,8 @@ export default function DashboardPage() {
   const [showBalance, setShowBalance] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [requestAmount, setRequestAmount] = useState('');
+  const [isAccountDialogOpen, setIsAccountDialogOpen] = useState(false);
+  const [isLoansDialogOpen, setIsLoansDialogOpen] = useState(false);
   
   // AI Chatbot state
   const [chatInput, setChatInput] = useState('');
@@ -186,6 +200,14 @@ export default function DashboardPage() {
     // This is also for the 'Collect Money' feature
     // setChatMessages([]); 
     setRequestAmount('');
+  };
+  
+  const handleServiceClick = (serviceId: string) => {
+    if (serviceId === 'service_3') { // 'Accounts & FD/RD'
+        setIsAccountDialogOpen(true);
+    } else if (serviceId === 'service_4') { // 'Loans'
+        setIsLoansDialogOpen(true);
+    }
   };
 
   return (
@@ -453,15 +475,68 @@ export default function DashboardPage() {
           <section>
              <div className="grid grid-cols-4 gap-4">
               {services.map((service) => {
-                return <ServiceIcon key={service.id} service={service} />;
+                return (
+                    <ServiceIcon
+                        key={service.id}
+                        service={service}
+                        onClick={() => handleServiceClick(service.id)}
+                    />
+                );
               })}
             </div>
           </section>
 
         </main>
       </div>
+
+       {/* Accounts Dialog */}
+      <Dialog open={isAccountDialogOpen} onOpenChange={setIsAccountDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Account Details</DialogTitle>
+            <DialogDescription>
+              Your personal and account information.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <DetailItem label="Full Name" value={displayName} />
+            <DetailItem label="Email Address" value={email || user.email} />
+            <DetailItem label="UPI ID" value={upiId} />
+          </div>
+          <DialogFooter className="sm:justify-start">
+             <Button asChild variant="outline">
+                <Link href="/" onClick={() => setIsAccountDialogOpen(false)}>
+                    Create New Account
+                </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Loans Dialog */}
+      <Dialog open={isLoansDialogOpen} onOpenChange={setIsLoansDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+                <DialogTitle>Loan Services</DialogTitle>
+                <DialogDescription>
+                    Explore our loan options.
+                </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+                {loanOptions.map((option) => {
+                    const Icon = option.icon;
+                    return (
+                        <Link href={option.href} key={option.label} onClick={() => setIsLoansDialogOpen(false)}>
+                            <div className="flex items-center gap-3 rounded-md p-3 text-left hover:bg-accent cursor-pointer border">
+                                <Icon className="h-6 w-6 text-primary" />
+                                <span className="font-medium">{option.label}</span>
+                            </div>
+                        </Link>
+                    )
+                })}
+            </div>
+        </DialogContent>
+      </Dialog>
     </UserDashboardLayout>
   );
 }
-
-    
