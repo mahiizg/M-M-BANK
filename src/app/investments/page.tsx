@@ -1,20 +1,76 @@
+
+'use client';
+
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Landmark, TrendingUp, ArrowRight } from "lucide-react";
+import { 
+    Landmark, 
+    Star, 
+    Repeat, 
+    FileText, 
+    TrendingUp, 
+    AreaChart, 
+    Gem, 
+    Shield, 
+    ShieldCheck,
+    ArrowRight
+} from "lucide-react";
 import Link from "next/link";
 
 const investmentOptions = [
   {
     href: "#",
     icon: Landmark,
-    label: "Fixed Deposit (FD)",
-    description: "Earn guaranteed returns on your savings.",
+    label: "Insta Fixed Deposits",
+    description: "Secure, high-yield fixed deposits.",
+  },
+  {
+    href: "#",
+    icon: Star,
+    label: "MMWish",
+    description: "Flexible goal-based savings.",
+  },
+  {
+    href: "#",
+    icon: Repeat,
+    label: "RD",
+    description: "Recurring deposits for regular savings.",
+  },
+  {
+    href: "#",
+    icon: FileText,
+    label: "Demat",
+    description: "Hold your shares and securities electronically.",
   },
   {
     href: "#",
     icon: TrendingUp,
-    label: "Systematic Investment Plan (SIP)",
-    description: "Invest in mutual funds regularly.",
+    label: "Mutual Funds",
+    description: "Diversify your portfolio with mutual funds.",
+  },
+  {
+    href: "#",
+    icon: AreaChart,
+    label: "Stocks/IPO",
+    description: "Invest directly in the stock market.",
+  },
+  {
+    href: "#",
+    icon: Gem,
+    label: "Gold Bonds",
+    description: "Invest in digital gold.",
+  },
+  {
+    href: "#",
+    icon: Shield,
+    label: "PPF",
+    description: "Public Provident Fund for long-term savings.",
+  },
+  {
+    href: "#",
+    icon: ShieldCheck,
+    label: "NPS",
+    description: "National Pension System for retirement planning.",
   },
 ];
 
@@ -23,22 +79,20 @@ export default function InvestmentsPage() {
     <UserDashboardLayout>
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="font-headline text-2xl">Investments & Insurance</CardTitle>
-          <CardDescription>Grow your wealth securely.</CardDescription>
+          <CardTitle className="font-headline text-2xl">Investments</CardTitle>
+          <CardDescription>Choose from a wide range of investment products to grow your wealth.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {investmentOptions.map((option) => (
               <Link href={option.href} key={option.label}>
-                <div className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50">
-                  <div className="flex items-center gap-4">
-                    <option.icon className="h-8 w-8 text-primary" />
-                    <div>
-                      <p className="font-semibold">{option.label}</p>
-                      <p className="text-sm text-muted-foreground">{option.description}</p>
-                    </div>
+                <div className="flex items-start gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50 h-full">
+                  <option.icon className="h-8 w-8 text-primary mt-1" />
+                  <div className="flex-1">
+                    <p className="font-semibold">{option.label}</p>
+                    <p className="text-sm text-muted-foreground">{option.description}</p>
                   </div>
-                  <Button variant="outline">Invest Now</Button>
+                   <ArrowRight className="h-5 w-5 text-muted-foreground self-center" />
                 </div>
               </Link>
             ))}
