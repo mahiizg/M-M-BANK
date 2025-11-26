@@ -144,7 +144,7 @@ export default function DashboardClient() {
       style: "currency",
       currency: "INR",
       minimumFractionDigits: 2,
-    }).format(amount);
+    }).format(amount).replace(/Rs\.?|INR\s*/gi, "₹").replace(/\s+/g, "");
   };
 
 

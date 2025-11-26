@@ -15,7 +15,7 @@ const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
-  }).format(amount);
+  }).format(amount).replace(/Rs\.?|INR\s*/gi, "₹").replace(/\s+/g, "");
 };
 
 const getInitials = (name: string) => {
