@@ -36,20 +36,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useUser, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query } from "firebase/firestore";
-import { useCollection } from "@/firebase/firestore/use-collection";
+import { transactions as staticTransactions, type Transaction } from "@/lib/data";
 import { Skeleton } from "@/components/ui/skeleton";
-
-interface Transaction {
-    id: string;
-    description: string;
-    type: string;
-    status: 'Completed' | 'Pending' | 'Failed';
-    amount: number;
-    balance: number;
-    date: string;
-}
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
@@ -59,15 +47,8 @@ const formatCurrency = (amount: number) => {
 };
 
 export default function HistoryPage() {
-  const { user } = useUser();
-  const firestore = useFirestore();
-
-  const transactionsQuery = useMemoFirebase(() => {
-    if (!firestore || !user) return null;
-    return query(collection(firestore, `users/${user.uid}/transactions`));
-  }, [firestore, user]);
-
-  const { data: transactions, isLoading } = useCollection<Transaction>(transactionsQuery);
+  const isLoading = false; // Not loading static data
+  const transactions = staticTransactions;
 
   return (
     <UserDashboardLayout>

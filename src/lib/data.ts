@@ -16,11 +16,12 @@ export type Account = {
 
 export type Transaction = {
   id: string;
-  userId: string;
-  type: 'recharge' | 'electricity' | 'lpg' | 'deposit' | 'withdrawal' | 'transfer' | 'payment';
+  description: string;
+  type: string;
+  status: 'Completed' | 'Pending' | 'Failed';
   amount: number;
+  balance: number;
   date: string;
-  status: string;
 };
 
 export type RechargePlan = {
@@ -160,5 +161,72 @@ export const pendingRequests: PendingRequest[] = [
     person: people[4],
     amount: 850,
     note: "Dinner yesterday",
+  },
+];
+
+
+export const transactions: Transaction[] = [
+  {
+    id: "txn_1",
+    description: "Salary Credit",
+    type: "deposit",
+    status: "Completed",
+    amount: 150000,
+    balance: 450000.75,
+    date: "2024-07-01",
+  },
+  {
+    id: "txn_2",
+    description: "Netflix Subscription",
+    type: "payment",
+    status: "Completed",
+    amount: -799,
+    balance: 449201.75,
+    date: "2024-07-05",
+  },
+  {
+    id: "txn_3",
+    description: "Transfer to Rohan Gupta",
+    type: "transfer",
+    status: "Completed",
+    amount: -5000,
+    balance: 444201.75,
+    date: "2024-07-10",
+  },
+  {
+    id: "txn_4",
+    description: "Electricity Bill",
+    type: "payment",
+    status: "Completed",
+    amount: -2500,
+    balance: 441701.75,
+    date: "2024-07-12",
+  },
+    {
+    id: "txn_5",
+    description: "Zomato Order",
+    type: "payment",
+    status: "Completed",
+    amount: -1250,
+    balance: 440451.75,
+    date: "2024-07-15",
+  },
+  {
+    id: "txn_6",
+    description: "Deposit from Savings",
+    type: "deposit",
+    status: "Completed",
+    amount: 10000,
+    balance: 450451.75,
+    date: "2024-07-18",
+  },
+  {
+    id: "txn_7",
+    description: "Airtel Recharge",
+    type: "recharge",
+    status: "Pending",
+    amount: -999,
+    balance: 449452.75,
+    date: "2024-07-20",
   },
 ];
